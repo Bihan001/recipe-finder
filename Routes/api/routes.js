@@ -71,15 +71,17 @@ router.post('/createRecipe', async (req, res) => {
       mineral,
     } = req.body;
 
-    var tagArray = tags.split(',').map((item) => item.trim());
-    var ingredientArray = ingredients.split(',').map((item) => item.trim());
+    var tagArray = tags.split(',').map((item) => item.trim().toUpperCase());
+    var ingredientArray = ingredients
+      .split(',')
+      .map((item) => item.trim().toUpperCase());
     var ingredientDetailArray = ingredientDetails
       .split('@')
       .map((item) => item.trim());
     var stepArray = steps.split('@').map((item) => item.trim());
 
     var recipe = new Recipe({
-      recipeName,
+      recipeName: recipeName.toUpperCase(),
       ownerName,
       numberOfServes,
       prepTime,
@@ -115,6 +117,26 @@ router.post('/createRecipe', async (req, res) => {
 router.get('/getAllRecipes', async (req, res) => {
   try {
     const recipes = await Recipe.find({});
+    return res
+      .status(200)
+      .json({ data: { message: 'Success', recipes: recipes } });
+  } catch (err) {
+    console.log(err.message);
+    return res.status(500).send('Server Error');
+  }
+});
+
+router.get('/getRecipeCommon/:name', async (req, res) => {
+  try {
+    const name = req.params.name.toUpperCase();
+    var recipes = await Recipe.find({});
+    recipes = recipes.filter((r) =>
+      r.recipeName.includes(name) || r.tags.find((tag) => tag.includes(name))
+        ? true
+        : false || r.ingredients.find((ingredient) => ingredientincludes(name))
+        ? true
+        : false
+    );
     return res
       .status(200)
       .json({ data: { message: 'Success', recipes: recipes } });
