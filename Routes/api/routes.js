@@ -2,44 +2,13 @@ const express = require('express');
 const router = express.Router();
 const Recipe = require('../../Models/Recipe');
 
-function splitCSVButIgnoreCommasInDoublequotes(str) {
-  //split the str first
-  //then merge the elments between two double quotes
-  var delimiter = ',';
-  var quotes = '"';
-  var elements = str.split(delimiter);
-  var newElements = [];
-  for (var i = 0; i < elements.length; ++i) {
-    if (elements[i].indexOf(quotes) >= 0) {
-      //the left double quotes is found
-      var indexOfRightQuotes = -1;
-      var tmp = elements[i];
-      //find the right double quotes
-      for (var j = i + 1; j < elements.length; ++j) {
-        if (elements[j].indexOf(quotes) >= 0) {
-          indexOfRightQuotes = j;
-          break;
-        }
-      }
-      //found the right double quotes
-      //merge all the elements between double quotes
-      if (-1 != indexOfRightQuotes) {
-        for (var j = i + 1; j <= indexOfRightQuotes; ++j) {
-          tmp = tmp + delimiter + elements[j];
-        }
-        newElements.push(tmp);
-        i = indexOfRightQuotes;
-      } else {
-        //right double quotes is not found
-        newElements.push(elements[i]);
-      }
-    } else {
-      //no left double quotes is found
-      newElements.push(elements[i]);
+function isSubset(arr1, arr2) {
+  for (var i = 0; i < arr2.length; i++) {
+    if (arr1.indexOf(arr2[i]) == -1) {
+      return false;
     }
   }
-
-  return newElements;
+  return true;
 }
 
 router.get('/', (req, res) => {
@@ -133,13 +102,84 @@ router.get('/getRecipeCommon/:name', async (req, res) => {
     recipes = recipes.filter((r) =>
       r.recipeName.includes(name) || r.tags.find((tag) => tag.includes(name))
         ? true
-        : false || r.ingredients.find((ingredient) => ingredientincludes(name))
+        : false || r.ingredients.find((ingredient) => ingredient.includes(name))
         ? true
         : false
     );
+    return res.status(200).json({
+      data: { message: 'Success', length: recipes.length, recipes: recipes },
+    });
+  } catch (err) {
+    console.log(err.message);
+    return res.status(500).send('Server Error');
+  }
+});
+
+router.post('/advancedSearch', async (req, res) => {
+  try {
+    const { recipeName, category, ingredients, tags, option } = req.body;
+    var recipes = await Recipe.find({});
+    recipes = recipes.filter((r) =>
+      r.recipeName === recipeName.toUpperCase() && option === 'ALL'
+        ? isSubset(r.ingredients, ingredients)
+        : r.ingredients.some((r) => ingredients.indexOf(r) >= 0) &&
+          r.tags.some((r) => tags.indexOf(r) >= 0) &&
+          isSubset(r.tags, [category])
+    );
+    return res.status(200).json({
+      data: { message: 'Success', length: recipes.length, recipes: recipes },
+    });
+  } catch (err) {
+    console.log(err.message);
+    return res.status(500).send('Server Error');
+  }
+});
+
+router.get('/topBreakfastRecipe', async (req, res) => {
+  try {
+    const recipes = await Recipe.find({});
+    const recipe = recipes
+      .filter((r) => r.tags.includes('BREAKFAST'))
+      .reduce((prev, current) =>
+        prev.rating >= current.rating ? prev : current
+      );
     return res
       .status(200)
-      .json({ data: { message: 'Success', recipes: recipes } });
+      .json({ data: { message: 'Success', recipe: recipe } });
+  } catch (err) {
+    console.log(err.message);
+    return res.status(500).send('Server Error');
+  }
+});
+
+router.get('/topLunchRecipe', async (req, res) => {
+  try {
+    const recipes = await Recipe.find({});
+    const recipe = recipes
+      .filter((r) => r.tags.includes('LUNCH'))
+      .reduce((prev, current) =>
+        prev.rating >= current.rating ? prev : current
+      );
+    return res
+      .status(200)
+      .json({ data: { message: 'Success', recipe: recipe } });
+  } catch (err) {
+    console.log(err.message);
+    return res.status(500).send('Server Error');
+  }
+});
+
+router.get('/topDinnerRecipe', async (req, res) => {
+  try {
+    const recipes = await Recipe.find({});
+    const recipe = recipes
+      .filter((r) => r.tags.includes('DINNER'))
+      .reduce((prev, current) =>
+        prev.rating >= current.rating ? prev : current
+      );
+    return res
+      .status(200)
+      .json({ data: { message: 'Success', recipe: recipe } });
   } catch (err) {
     console.log(err.message);
     return res.status(500).send('Server Error');
