@@ -1,4 +1,5 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {
@@ -36,104 +37,44 @@ const Homepage = ({
       <Fragment>
         <Navbar />
 
-        <div className='jumbotron'>
-          <div>
-            <center>
-              <div
-                id='carouselExampleCaptions'
-                class='carousel slide'
-                data-ride='carousel'
-                style={{ height: '60%', width: '50%' }}
-              >
-                <ol class='carousel-indicators'>
-                  <li
-                    data-target='#carouselExampleCaptions'
-                    data-slide-to='0'
-                    class='active'
-                  ></li>
-                  <li
-                    data-target='#carouselExampleCaptions'
-                    data-slide-to='1'
-                  ></li>
-                  <li
-                    data-target='#carouselExampleCaptions'
-                    data-slide-to='2'
-                  ></li>
-                </ol>
-                <div class='carousel-inner'>
-                  <div class='carousel-item active'>
-                    <img
-                      src='https://cdn.downtoearth.org.in/library/large/2019-03-05/0.89399200_1551782137_fast1.jpg'
-                      class='d-block w-100'
-                      alt='...'
-                    />
-                    <div class='carousel-caption d-none d-md-block'>
-                      <h5>First slide label</h5>
-                      <p>
-                        Nulla vitae elit libero, a pharetra augue mollis
-                        interdum.
-                      </p>
-                    </div>
-                  </div>
-                  <div class='carousel-item'>
-                    <img
-                      src='https://cdn.downtoearth.org.in/library/large/2019-03-05/0.89399200_1551782137_fast1.jpg'
-                      class='d-block w-100'
-                      alt='...'
-                    />
-                    <div class='carousel-caption d-none d-md-block'>
-                      <h5>Second slide label</h5>
-                      <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      </p>
-                    </div>
-                  </div>
-                  <div class='carousel-item'>
-                    <img
-                      src='https://cdn.downtoearth.org.in/library/large/2019-03-05/0.89399200_1551782137_fast1.jpg'
-                      class='d-block w-100'
-                      alt='...'
-                    />
-                    <div class='carousel-caption d-none d-md-block'>
-                      <h5>Third slide label</h5>
-                      <p>
-                        Praesent commodo cursus magna, vel scelerisque nisl
-                        consectetur.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <a
-                  class='carousel-control-prev'
-                  href='#carouselExampleCaptions'
-                  role='button'
-                  data-slide='prev'
-                >
-                  <span
-                    class='carousel-control-prev-icon'
-                    aria-hidden='true'
-                  ></span>
-                  <span class='sr-only'>Previous</span>
-                </a>
-                <a
-                  class='carousel-control-next'
-                  href='#carouselExampleCaptions'
-                  role='button'
-                  data-slide='next'
-                >
-                  <span
-                    class='carousel-control-next-icon'
-                    aria-hidden='true'
-                  ></span>
-                  <span class='sr-only'>Next</span>
-                </a>
-              </div>
-            </center>
-          </div>
+        <div
+          id='carouselExampleFade'
+          class='carousel slide carousel-fade'
+          data-ride='carousel'
+        >
           <div className='title'>
             <p className='zoom'>Recipe</p>
             <p className='sub'>Create your fill</p>
           </div>
+          <div class='carousel-inner'>
+            <div class='carousel-item active' data-interval='2000'>
+              <div className='jumbotron slide1'></div>
+            </div>
+            <div class='carousel-item' data-interval='2000'>
+              <div className='jumbotron slide2'>x</div>
+            </div>
+            <div class='carousel-item' data-interval='2000'>
+              <div className='jumbotron slide3'></div>
+            </div>
+          </div>
+          <a
+            class='carousel-control-prev'
+            href='#carouselExampleFade'
+            role='button'
+            data-slide='prev'
+          >
+            <span class='carousel-control-prev-icon' aria-hidden='true'></span>
+            <span class='sr-only'>Previous</span>
+          </a>
+          <a
+            class='carousel-control-next'
+            href='#carouselExampleFade'
+            role='button'
+            data-slide='next'
+          >
+            <span class='carousel-control-next-icon' aria-hidden='true'></span>
+            <span class='sr-only'>Next</span>
+          </a>
         </div>
 
         <div className='thebackground'>

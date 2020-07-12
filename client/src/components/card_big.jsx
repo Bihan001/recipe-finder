@@ -18,7 +18,10 @@ const CardBig = ({ data }) => {
           />
           <div className='cards2-headingtwo'>{data.ownerName}</div>
         </div>
-        <img src={spoon_fork} className='card2-imagetwo' />
+        <img
+          src={data.image ? data.image : spoon_fork}
+          className='card2-imagetwo'
+        />
         <div className='cards2-within2two'>
           <Link to={`/recipe/${data._id}`} id='nounderline'>
             {data.recipeName.length > 20
