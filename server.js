@@ -1,12 +1,12 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
-const config = require('config');
+require('dotenv').config();
 const path = require('path');
 const mongooseConnect = require('./Database/MongooseConnect');
 
 mongooseConnect();
-const PORT = config.PORT || 5000;
+const PORT = process.env.PORT || 5000;
 
 app.use(express.json());
 app.use(cors());

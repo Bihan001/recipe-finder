@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
-const config = require('config');
+require('dotenv').config();
 module.exports = () =>
   mongoose
-    .connect(config.DATABASE, {
+    .connect(process.env.DATABASE, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useCreateIndex: true,
