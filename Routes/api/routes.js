@@ -49,10 +49,6 @@ function excludedIngredients(ingredients, r) {
   return true;
 }
 
-router.get('/', (req, res) => {
-  return res.status(200).send('Server is up and running');
-});
-
 router.post('/createRecipe', async (req, res) => {
   try {
     const {
