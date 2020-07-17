@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
     "server-dev": "cross-env NODE_ENV=development nodemon server.js",
-    "server-prod": "cross-env NODE_ENV=production nodemon server.js"
+    "server-prod": "cross-env NODE_ENV=production nodemon server.js",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "keywords": [],
   "author": "Bihan Chakraborty",
@@ -17,9 +18,9 @@
     "cors": "^2.8.5",
     "cross-env": "^7.0.2",
     "express": "^4.17.1",
-    "firebase-tools": "^8.6.0",
     "js-search": "^2.0.0",
     "mongoose": "^5.9.22",
+    "path": "^0.12.7",
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0"
   }
