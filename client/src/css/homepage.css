@@ -63,6 +63,7 @@ ul {
   transform: translate(-50%, -50%);
 }
 .zoom {
+  color: #dddddd;
   letter-spacing: 2px;
   font-weight: 100;
   font-size: 100px;
@@ -70,6 +71,7 @@ ul {
 }
 
 .sub {
+  color: #dddddd;
   letter-spacing: 10px;
   font-weight: 400;
   font-size: 30px;
@@ -188,10 +190,12 @@ p {
   margin-left: 120px;
   position: relative;
   top: 16px;
+  font-size: 15px;
   font-weight: bold;
 }
 .within3 {
   font-family: 'Poppins', sans-serif;
+  font-size: 15px;
   margin-left: 120px;
   position: relative;
   top: 20px;
@@ -210,7 +214,7 @@ p {
   height: 150px;
   display: block;
   margin-top: -120px;
-  box-shadow: 10px 10px 1rem #a1a1a152;
+  box-shadow: 5px 5px 1rem #a1a1a132;
   border-radius: 7px;
 }
 #nounderline {
@@ -415,4 +419,20 @@ span {
   height: 80px;
   background-color: white;
   text-align: center;
+}
+
+#searchbuttonstyle {
+  border-radius: 20px;
+  padding: 5px 10px;
+  font-weight: 400;
+  font-size: 120%;
+}
+
+.prep,
+strong {
+  color: #eeeeee;
+}
+
+.diet strong {
+  color: #a5a5a5;
 }

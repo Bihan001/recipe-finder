@@ -17,6 +17,8 @@
     "cors": "^2.8.5",
     "cross-env": "^7.0.2",
     "express": "^4.17.1",
+    "firebase-tools": "^8.6.0",
+    "js-search": "^2.0.0",
     "mongoose": "^5.9.22",
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0"

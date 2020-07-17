@@ -15,9 +15,33 @@ const config = {
 
 const HOST = 'http://localhost:5000';
 
+export const getRecipe = (id) => async (dispatch) => {
+  try {
+    const res = await axios.get(`${HOST}/getRecipe/${id}`);
+    dispatch({
+      type: GET_RECIPE,
+      payload: res.data.data,
+    });
+  } catch (err) {
+    console.log(err.message);
+  }
+};
+
 export const getAllRecipes = () => async (dispatch) => {
   try {
     const res = await axios.get(`${HOST}/getAllRecipes`);
+    dispatch({
+      type: GET_RECIPES,
+      payload: res.data.data,
+    });
+  } catch (err) {
+    console.log(err.message);
+  }
+};
+
+export const getFilteredRecipes = (formData) => async (dispatch) => {
+  try {
+    const res = await axios.post(`${HOST}/advancedSearch`, formData, config);
     dispatch({
       type: GET_RECIPES,
       payload: res.data.data,

@@ -2,10 +2,48 @@ const express = require('express');
 const router = express.Router();
 const Recipe = require('../../Models/Recipe');
 
-function isSubset(arr1, arr2) {
-  for (var i = 0; i < arr2.length; i++) {
-    if (arr1.indexOf(arr2[i]) == -1) {
-      return false;
+function hasKeyword(keyword, r) {
+  if (
+    r.recipeName.indexOf(keyword) !== -1 ||
+    r.tags.some((t) => t.indexOf(keyword) !== -1)
+  ) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function hasCategory(category, r) {
+  if (r.category.indexOf(category) !== -1) {
+    return true;
+  } else return false;
+}
+
+function matchVeg_nonVeg(option, r) {
+  if (option === r.isVeg) {
+    return true;
+  } else return false;
+}
+
+function includedIngredients(ingredients, r) {
+  var cnt = 0;
+  for (let i = 0; i < ingredients.length; i++) {
+    for (let j = 0; j < r.ingredients.length; j++) {
+      if (r.ingredients[j].indexOf(ingredients[i]) !== -1) {
+        cnt += 1;
+        continue;
+      }
+    }
+  }
+  return cnt === ingredients.length ? true : false;
+}
+
+function excludedIngredients(ingredients, r) {
+  for (let i = 0; i < r.ingredients.length; i++) {
+    for (let j = 0; j < ingredients.length; j++) {
+      if (r.ingredients[i].indexOf(ingredients[j]) !== -1) {
+        return false;
+      }
     }
   }
   return true;
@@ -24,6 +62,8 @@ router.post('/createRecipe', async (req, res) => {
       prepTime,
       cookTime,
       description,
+      category,
+      isVeg,
       rating,
       image,
       video,
@@ -56,6 +96,8 @@ router.post('/createRecipe', async (req, res) => {
       prepTime,
       cookTime,
       description,
+      category: category.toUpperCase(),
+      isVeg: Boolean(isVeg),
       rating: Number(rating),
       image: image === ' ' ? '' : image,
       video: video === ' ' ? '' : video,
@@ -83,6 +125,18 @@ router.post('/createRecipe', async (req, res) => {
   }
 });
 
+router.get('/getRecipe/:id', async (req, res) => {
+  try {
+    const recipe = await Recipe.findById(req.params.id);
+    return res
+      .status(200)
+      .json({ data: { message: 'Success', recipe: recipe } });
+  } catch (err) {
+    console.log(err.message);
+    return res.status(500).send('Server Error');
+  }
+});
+
 router.get('/getAllRecipes', async (req, res) => {
   try {
     const recipes = await Recipe.find({});
@@ -100,9 +154,12 @@ router.get('/getRecipeCommon/:name', async (req, res) => {
     const name = req.params.name.toUpperCase();
     var recipes = await Recipe.find({});
     recipes = recipes.filter((r) =>
-      r.recipeName.includes(name) || r.tags.find((tag) => tag.includes(name))
+      r.recipeName.indexOf(name) != -1 ||
+      r.category.indexOf(name) != -1 ||
+      r.tags.find((tag) => tag.indexOf(name) != -1)
         ? true
-        : false || r.ingredients.find((ingredient) => ingredient.includes(name))
+        : false ||
+          r.ingredients.find((ingredient) => ingredient.indexOf(name) != -1)
         ? true
         : false
     );
@@ -117,15 +174,33 @@ router.get('/getRecipeCommon/:name', async (req, res) => {
 
 router.post('/advancedSearch', async (req, res) => {
   try {
-    const { recipeName, category, ingredients, tags, option } = req.body;
+    const {
+      keyword,
+      category,
+      veg_nonVeg,
+      ingredients_include,
+      ingredients_exclude,
+    } = req.body;
     var recipes = await Recipe.find({});
-    recipes = recipes.filter((r) =>
-      r.recipeName === recipeName.toUpperCase() && option === 'ALL'
-        ? isSubset(r.ingredients, ingredients)
-        : r.ingredients.some((r) => ingredients.indexOf(r) >= 0) &&
-          r.tags.some((r) => tags.indexOf(r) >= 0) &&
-          isSubset(r.tags, [category])
+    recipes = recipes.filter(
+      (r) =>
+        (keyword ? hasKeyword(keyword.toUpperCase(), r) : true) &&
+        (veg_nonVeg ? matchVeg_nonVeg(veg_nonVeg, r) : true) &&
+        (ingredients_exclude
+          ? excludedIngredients(
+              ingredients_exclude.map((i) => i.toUpperCase()),
+              r
+            )
+          : true) &&
+        (ingredients_include
+          ? includedIngredients(
+              ingredients_include.map((i) => i.toUpperCase()),
+              r
+            )
+          : true) &&
+        (category ? hasCategory(category.toUpperCase(), r) : true)
     );
+
     return res.status(200).json({
       data: { message: 'Success', length: recipes.length, recipes: recipes },
     });

@@ -1,22 +1,17 @@
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
-import logo from '../images/logo.svg';
 import spoon_fork from '../images/spoon_fork.png';
-import food4 from '../images/food4.jpg';
 
 const CardBig = ({ data }) => {
   return (
     <Fragment>
       <div className='cards2two'>
         <div className='cards2-within1two'>
-          <img
-            src={logo}
-            height='24'
-            width='36'
-            className='icontwo'
-            style={{ posiiton: 'relative', top: '5px', opacity: '65%' }}
-          />
-          <div className='cards2-headingtwo'>{data.ownerName}</div>
+          <div className='cards2-headingtwo'>
+            <i class='fas fa-utensils pl-3 pr-2'></i>
+            {data.category.charAt(0).toUpperCase() +
+              data.category.slice(1).toLowerCase()}
+          </div>
         </div>
         <img
           src={data.image ? data.image : spoon_fork}
@@ -30,8 +25,8 @@ const CardBig = ({ data }) => {
           </Link>
         </div>
         <div className='cards2-within3two'>
-          {data.description.length > 60
-            ? data.description.slice(0, 60) + '...'
+          {data.description.length >= 40
+            ? data.description.slice(0, 40) + '...'
             : data.description}
         </div>
         <div className='tagstwo'>
