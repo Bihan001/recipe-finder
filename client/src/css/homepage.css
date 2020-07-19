@@ -110,8 +110,6 @@ hr.sep-2 {
       rgba(0, 0, 0, 0.73)
     ),
     url('../images/food3.jpg');
-  filter: blur(1px);
-  -webkit-filter: blur(1px);
 }
 
 .slide2 {
@@ -121,8 +119,6 @@ hr.sep-2 {
       rgba(0, 0, 0, 0.73)
     ),
     url('../images/cover1.jpg');
-  filter: blur(1px);
-  -webkit-filter: blur(1px);
 }
 
 .slide3 {
@@ -132,8 +128,6 @@ hr.sep-2 {
       rgba(0, 0, 0, 0.73)
     ),
     url('../images/food1.jpg');
-  filter: blur(1px);
-  -webkit-filter: blur(1px);
 }
 
 .block {
