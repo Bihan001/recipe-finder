@@ -187,11 +187,10 @@ p {
 .my-row {
   padding: 5px;
 }
-.my-container {
-}
+
 .within1 {
   display: inline;
-  opacity: 80%;
+  opacity: 0.8;
   font-size: 120%;
   position: relative;
   top: 4px;
@@ -359,7 +358,7 @@ p {
   margin-top: 10px;
   height: 50px;
   font-family: 'Raleway', sans-serif;
-  opacity: 85%;
+  opacity: 0.85;
 }
 .tagstwo {
   display: flex;
