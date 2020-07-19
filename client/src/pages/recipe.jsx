@@ -44,7 +44,7 @@ const Recipe = ({ match, getRecipe, recipe: { recipe } }) => {
 
                 <div className='basicinfo'>
                   <div className='row'>
-                    <div className='col-lg-4 col-md-4 col-sm-3 col-xm-3'>
+                    <div className='col-4'>
                       <b>
                         <p className='prep'>Serves:</p>
                       </b>
@@ -55,7 +55,7 @@ const Recipe = ({ match, getRecipe, recipe: { recipe } }) => {
                         </strong>
                       </p>
                     </div>
-                    <div className='col-lg-4 col-md-4 col-sm-4 col-xm-3'>
+                    <div className='col-4'>
                       <b>
                         <p className='prep'>Prep Time:</p>
                       </b>
@@ -66,7 +66,7 @@ const Recipe = ({ match, getRecipe, recipe: { recipe } }) => {
                         </strong>
                       </p>
                     </div>
-                    <div className='col-lg-4 col-md-4 col-sm-4 col-xm-3'>
+                    <div className='col-4'>
                       <b>
                         <p className='prep'>Cooking:</p>
                       </b>
@@ -122,7 +122,7 @@ const Recipe = ({ match, getRecipe, recipe: { recipe } }) => {
                 </div>
 
                 {recipe.video && (
-                  <center>
+                  <div className='videoWrapper text-center'>
                     <iframe
                       width='560'
                       height='315'
@@ -136,7 +136,7 @@ const Recipe = ({ match, getRecipe, recipe: { recipe } }) => {
                       allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture'
                       allowfullscreen
                     ></iframe>
-                  </center>
+                  </div>
                 )}
 
                 <div className='diet clearfix'>

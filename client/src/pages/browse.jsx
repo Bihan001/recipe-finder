@@ -94,7 +94,6 @@ const Browse = ({ getAllRecipes, getFilteredRecipes, recipe: { recipes } }) => {
                   closeMenuOnSelect={true}
                   noOptionsMessage={() => 'Nothing'}
                   components={animatedComponents}
-                  autoFocus
                   options={categories}
                 />
               </div>
@@ -111,7 +110,6 @@ const Browse = ({ getAllRecipes, getFilteredRecipes, recipe: { recipes } }) => {
                   noOptionsMessage={() => 'Nothing'}
                   components={animatedComponents}
                   isMulti
-                  autoFocus
                   options={ingredients}
                 />
               </div>
@@ -128,7 +126,6 @@ const Browse = ({ getAllRecipes, getFilteredRecipes, recipe: { recipes } }) => {
                   noOptionsMessage={() => 'Nothing'}
                   components={animatedComponents}
                   isMulti
-                  autoFocus
                   options={ingredients}
                 />
               </div>
